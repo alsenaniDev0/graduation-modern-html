@@ -1,0 +1,101 @@
+{
+    "id": "royal-wedding",
+    "name": "دعوة زفاف ملكية",
+    "version": "1.0.0",
+    "html": "index.html",
+    "css": "style.css",
+    "fields": [
+        {
+            "options": [
+                {
+                    "value": "🎓",
+                    "label": "🎓"
+                },
+                {
+                    "label": "⭐",
+                    "value": "⭐"
+                },
+                {
+                    "label": "✨",
+                    "value": "✨"
+                },
+                {
+                    "value": "🎉",
+                    "label": "🎉"
+                }
+            ],
+            "label": "الأيقونة",
+            "key": "icon",
+            "type": "icon",
+            "required": true,
+            "defaultValue": "🎓"
+        },
+        {
+            "defaultValue": "دعوة حفل تخرج",
+            "required": true,
+            "maxLength": 60,
+            "type": "text",
+            "label": "عنوان الدعوة",
+            "key": "title"
+        },
+        {
+            "type": "textarea",
+            "maxLength": 220,
+            "defaultValue": "يسعدنا دعوتكم لحضور حفل التخرج",
+            "required": true,
+            "key": "message",
+            "minLength": 10,
+            "label": "نص الدعوة"
+        },
+        {
+            "separator": " و ",
+            "maxItems": 10,
+            "key": "names",
+            "label": "أسماء الخريجين",
+            "minItems": 1,
+            "required": true,
+            "placeholder": "مثال: سارة",
+            "type": "names"
+        },
+        {
+            "label": "التخصص",
+            "key": "major",
+            "required": false,
+            "placeholder": "مثال: علوم الحاسب",
+            "type": "text"
+        },
+        {
+            "label": "تاريخ الحفل",
+            "key": "date",
+            "required": true,
+            "type": "date"
+        },
+        {
+            "label": "الموقع",
+            "key": "location",
+            "type": "map",
+            "placeholder": "اختر الموقع من الخريطة",
+            "hint": "اضغط لاختيار الموقع من Google Map",
+            "required": true
+        },
+        {
+            "label": "رسالة الختام",
+            "minLength": 5,
+            "key": "closing",
+            "maxLength": 180,
+            "type": "textarea",
+            "defaultValue": "فرحتنا لا تكتمل إلا بحضوركم",
+            "required": true
+        },
+        {
+            "type": "youtube",
+            "placeholder": "https://youtu.be/...",
+            "hint": "ضع رابط YouTube وسيظهر كزر تشغيل صوت فقط",
+            "required": false,
+            "pattern": "^https?:\\/\\/.+",
+            "key": "soundUrl",
+            "label": "رابط YouTube للصوت",
+            "patternMessage": "الرابط يجب أن يبدأ بـ http أو https"
+        }
+    ]
+}

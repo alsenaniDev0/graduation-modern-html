@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="grad-site">
+        <div class="youtube-audio-box" data-youtube-audio>
+            <iframe class="youtube-hidden-player" src="{{soundUrl}}" title="YouTube audio player"
+                allow="autoplay; encrypted-media">
+            </iframe>
+
+            <div class="sound-overlay">
+                <div class="sound-overlay-card">
+                    <div class="sound-icon">🎓</div>
+                    <h2>دعوة التخرج</h2>
+                    <p>اضغط لفتح الدعوة وتشغيل الصوت</p>
+
+                    <button type="button" class="sound-start-btn">
+                        ▶ فتح الدعوة وتشغيل الصوت
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="sound-toggle-btn" aria-label="Mute sound">
+                🔊
+            </button>
+        </div>
+
+        <section class="hero">
+            <div class="badge">{{title}}</div>
+            <div class="icon">{{icon}}</div>
+            <p class="message">{{message}}</p>
+            <h1>{{names}}</h1>
+            <div class="major">{{major}}</div>
+        </section>
+
+        <section id="details" class="details">
+            <div class="detail">
+                <span>📅</span>
+                <small>التاريخ</small>
+                <strong>{{date}}</strong>
+            </div>
+
+            <div class="detail">
+                <span>📍</span>
+                <small>الموقع</small>
+                <strong>{{location}}</strong>
+
+                <a class="map-link" href="{{locationUrl}}" target="_top" rel="noopener noreferrer">
+                    فتح الموقع
+                </a>
+            </div>
+        </section>
+
+        <section class="closing">
+            <div>
+                <h2>{{closing}}</h2>
+                <p>{{title}}</p>
+            </div>
+        </section>
+
+        <script>
+            (function () {
+                var box = document.querySelector('[data-youtube-audio]');
+                if (!box) return;
+
+                var iframe = box.querySelector('iframe');
+                var overlay = box.querySelector('.sound-overlay');
+                var startButton = box.querySelector('.sound-start-btn');
+                var toggleButton = box.querySelector('.sound-toggle-btn');
+
+                if (!iframe || !overlay || !startButton || !toggleButton) return;
+
+                var src = iframe.getAttribute('src');
+
+                if (!src || src.trim() === '') {
+                    overlay.style.display = 'none';
+                    toggleButton.style.display = 'none';
+                    return;
+                }
+
+                var isPlaying = false;
+
+                function sendCommand(command) {
+                    if (!iframe.contentWindow) return;
+
+                    iframe.contentWindow.postMessage(JSON.stringify({
+                        event: 'command',
+                        func: command,
+                        args: []
+                    }), '*');
+                }
+
+                function playSound() {
+                    sendCommand('unMute');
+                    sendCommand('playVideo');
+                    isPlaying = true;
+                    toggleButton.textContent = '🔊';
+                }
+
+                function pauseSound() {
+                    sendCommand('pauseVideo');
+                    isPlaying = false;
+                    toggleButton.textContent = '🔇';
+                }
+
+                startButton.addEventListener('click', function () {
+                    overlay.classList.add('hide');
+                    box.classList.add('sound-started');
+
+                    setTimeout(playSound, 300);
+                    setTimeout(playSound, 900);
+                    setTimeout(playSound, 1500);
+                });
+
+                toggleButton.addEventListener('click', function () {
+                    if (isPlaying) {
+                        pauseSound();
+                    } else {
+                        playSound();
+                    }
+                });
+            })();
+        </script>
+    </main>
+</body>
+
+</html>
